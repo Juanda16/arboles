@@ -5,6 +5,8 @@ import models.DnaTest;
 import java.io.IOException;
 import util.FileTo;
 
+//3. Conocer que personas están asociados a una característica particular en uno de sus genes.
+
 public class main {
 
     /**
