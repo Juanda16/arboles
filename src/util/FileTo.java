@@ -2,7 +2,15 @@ package util;
 
 import java.io.*;
 
+import javax.xml.stream.events.NotationDeclaration;
+
 import arbol.binario.listaligada.busqueda.avl.ArbolAVL;
+import arbol.binario.listaligada.busqueda.avl.NodoAVL;
+import arbol.binario.listaligada.busqueda.normal.ArbolBinarioBusquedaGenerico;
+import arbol.binario.listaligada.busqueda.normal.NodoBinarioBusqueda;
+import arbol.nario.listageneralizada.ArbolNarioListaGeneralizada;
+import arbol.nario.listageneralizada.NodoNario;
+import ejemplos.grafico.arbol.binario.busqueda.biblioteca.NodoBinario;
 import models.DnaTest;
 import models.DnaTestGen1;
 
@@ -10,7 +18,9 @@ public class FileTo {
 
     public static final String SEPARATOR = ";";
     public static final String QUOTE = "\"";
-
+    private static ArbolBinarioBusquedaGenerico recordBin;
+    
+    
     /**
      * @param filePath
      * @return MatrizEnTripleta
@@ -28,6 +38,8 @@ public class FileTo {
             ArbolAVL<DnaTest> recordByGen3 = new ArbolAVL<DnaTest>();
             ArbolAVL<DnaTest> recordByGen4 = new ArbolAVL<DnaTest>();
             recordByGen3 = new ArbolAVL<DnaTest>();
+            ArbolAVL<DnaTest> recordAvl = new ArbolAVL<DnaTest>();
+            ArbolNarioListaGeneralizada recordNario= new ArbolNarioListaGeneralizada(new NodoNario(null));
             br = new BufferedReader(new FileReader(filePath));
             String line = br.readLine();
 
@@ -57,16 +69,6 @@ public class FileTo {
                     recordByGen4.insertarDato(tempTest);
                     
 
-
-                } catch (Exception error) {
-                    System.out.println(error);
-
-                }
-
-                line = br.readLine();
-            }
-            System.out.println(recordById.toString());
-            return recordById;
         } catch (Exception e) {
             System.out.println(e);
             return null;

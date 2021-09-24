@@ -5,6 +5,8 @@
  */
 package ejemplos.grafico.arbol.binario.busqueda.biblioteca;
 
+//import models.DnaTest;
+
 /**
  *
  * @author ealej
@@ -15,7 +17,7 @@ public class NodoBinario {
     private Libro dato;
     private NodoBinario ligaDerecha;
 
-    NodoBinario(Libro dato) {
+    public NodoBinario(Libro dato) {
         this.dato = dato;
     }
 
