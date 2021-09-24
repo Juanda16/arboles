@@ -10,6 +10,7 @@ public class DnaTest implements Comparable<DnaTest> {
     String gen3;
     String gen4;
     int fatherId;
+    int index;
 
     public DnaTest() {
         testId=hashCode();
@@ -79,14 +80,17 @@ public class DnaTest implements Comparable<DnaTest> {
         this.fatherId = fatherId;
     }
 
+   
+    /**
+     * comparar por userID
+     */
     @Override
     public int compareTo(DnaTest test) {
         DnaTest t = (DnaTest) test;
-        int pb = test.userId;
+        int pb = test.index;
         return pb;
         
     }
-
  
     
 }

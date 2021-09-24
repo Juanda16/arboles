@@ -26,6 +26,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+import models.DnaTest;
+
 /**
  *
  * @author Alejandro Escobar
@@ -35,6 +37,19 @@ public class ArbolNarioListaGeneralizada {
     NodoNario raiz;
     final static boolean TRANSFORMAR = true;
     final static boolean NOTRANSFORMAR = false;
+
+    /**
+     * @param raiz the raiz to set
+     */
+    public void setRaiz(NodoNario raiz) {
+        this.raiz = raiz;
+    }
+
+    /**
+     * 
+     */
+    public ArbolNarioListaGeneralizada() {
+    }
 
     public ArbolNarioListaGeneralizada(String h) {
         char[] cadena = h.toCharArray();
@@ -93,40 +108,19 @@ public class ArbolNarioListaGeneralizada {
     }
 
     /*
-    public static ArbolNarioListaGeneralizada parseString(String cad) {
-        Stack<NodoNario> stac = new Stack<>();
-        NodoNario x = new NodoNario();
-        NodoNario raiz = x;
-        NodoNario ultimo = x;
-        int lCad = cad.length();
-        for (int i = 1; i < lCad; i++) {
-            char dato = cad.charAt(i);
-            switch (dato) {
-                case ',':
-                    x = new NodoNario();
-                    ultimo.setLiga(x);
-                    ultimo = x;
-                    break;
-                case '(':
-                    stac.add(ultimo);
-                    x = new NodoNario();
-                    ultimo.setSw(1);
-                    ultimo.setDato(x);
-                    ultimo = x;
-                    break;
-                case ')':
-                    ultimo = stac.pop();
-                    break;
-                default:
-                    ultimo.setSw(0);
-                    ultimo.setDato(dato);
-            }
-        }
-        ArbolNarioListaGeneralizada anlg = new ArbolNarioListaGeneralizada(raiz);
-
-        return anlg;
-    }*/
-    private ArbolNarioListaGeneralizada(NodoNario raiz) {
+     * public static ArbolNarioListaGeneralizada parseString(String cad) {
+     * Stack<NodoNario> stac = new Stack<>(); NodoNario x = new NodoNario();
+     * NodoNario raiz = x; NodoNario ultimo = x; int lCad = cad.length(); for (int i
+     * = 1; i < lCad; i++) { char dato = cad.charAt(i); switch (dato) { case ',': x
+     * = new NodoNario(); ultimo.setLiga(x); ultimo = x; break; case '(':
+     * stac.add(ultimo); x = new NodoNario(); ultimo.setSw(1); ultimo.setDato(x);
+     * ultimo = x; break; case ')': ultimo = stac.pop(); break; default:
+     * ultimo.setSw(0); ultimo.setDato(dato); } } ArbolNarioListaGeneralizada anlg =
+     * new ArbolNarioListaGeneralizada(raiz);
+     * 
+     * return anlg; }
+     */
+    public ArbolNarioListaGeneralizada(NodoNario raiz) {
         this.raiz = raiz;
     }
 
@@ -235,7 +229,8 @@ public class ArbolNarioListaGeneralizada {
         NodoNario recorrido = raiz;
         Queue<NodoNario> cola = new LinkedList<>();
 
-        // Esta parte es solo para raíz por que no tengo forma de identificar si es un padre o no
+        // Esta parte es solo para raíz por que no tengo forma de identificar si es un
+        // padre o no
         if ((char) recorrido.getDato() == d) {
             System.out.println(getHijos(recorrido, Integer.SIZE));
             return;
@@ -312,6 +307,84 @@ public class ArbolNarioListaGeneralizada {
         }
     }
 
+    public void BuscarPorListas(int fatherId) {
+        Stack<NodoNario> migas = new Stack();
+        migas.add(raiz);
+        while (!migas.empty()) {
+            NodoNario pr = migas.pop();
+            while (pr != null) {
+                if (pr.getSw() == 0) {
+                    System.out.print(pr.getDato());
+                } else {
+                    NodoNario npr = (NodoNario) pr.getDato();
+                    migas.add(npr);
+                }
+                pr = pr.getLiga();
+            }
+        } // debo retornar un nodo? cual?
+    }
+
+    public void insertarNuevoHijo(NodoNario dato) {
+        NodoNario recorrido = raiz;
+        Queue<NodoNario> miga = new LinkedList<>();
+        if (raiz.getDato() == null) {
+            this.setRaiz(dato);
+        }
+        // BuscarPorListas(fatherId);
+        DnaTest regTemp = (DnaTest) dato.getDato();
+        int fatherIdTemp;
+        if (recorrido.getDato() == null) {
+            fatherIdTemp = 0;
+        } else {
+            fatherIdTemp = ((DnaTest) recorrido.getDato()).getUserId();
+        }
+        while (recorrido != null) {
+            if (recorrido.getSw() == 0) {
+
+                if (fatherIdTemp == regTemp.getFatherId()) {
+                    if (recorrido == raiz) {
+                        insertarHijo(recorrido, dato, TRANSFORMAR);
+
+                    } else {
+                        insertarHijo(recorrido, dato, NOTRANSFORMAR);
+                        break;
+                    }
+                }
+
+            } else {
+                NodoNario nreal = (NodoNario) recorrido.getDato();
+                if (nreal.getDato() == dato) {
+                    insertarHijo(nreal, dato, NOTRANSFORMAR);
+                    break;
+                } else {
+                    miga.add(nreal.getLiga());
+                }
+            }
+            recorrido = recorrido.getLiga();
+            if (recorrido == null) {
+                insertarHijo(raiz, dato, NOTRANSFORMAR);                
+            }
+            if (recorrido == null && !miga.isEmpty()) {
+                insertarHijo(recorrido, dato, NOTRANSFORMAR);
+                recorrido = miga.remove();
+            }
+
+        }
+    }
+
+    private void insertarHijo(NodoNario r, Object dato, boolean TRANSFORMAR) {
+        NodoNario nuevoHijo = new NodoNario(dato);
+        if (TRANSFORMAR) {
+            r.setSw(1);
+            NodoNario nuevoPadre = new NodoNario(r.getDato());
+            r.setDato(nuevoPadre);
+            nuevoPadre.setLiga(nuevoHijo);
+        } else {
+            nuevoHijo.setLiga(r.getLiga());
+            r.setLiga(nuevoHijo);
+        }  // a r le pone la liga de nuevo hijo pero r se pierde
+    }
+
     private void insertarHijo(NodoNario r, char dato, boolean TRANSFORMAR) {
         NodoNario nuevoHijo = new NodoNario(dato);
         if (TRANSFORMAR) {
@@ -331,7 +404,8 @@ public class ArbolNarioListaGeneralizada {
         int contar = 0;
         NodoNario recorrido = raiz;
 
-        // Esta parte es solo para raíz por que no tengo forma de identificar si es un padre o no
+        // Esta parte es solo para raíz por que no tengo forma de identificar si es un
+        // padre o no
         if ((char) recorrido.getDato() == x) {
             NodoNario primero = recorrido.getLiga();
             while (primero != null) {
@@ -373,9 +447,9 @@ public class ArbolNarioListaGeneralizada {
     }
 
     /**
-     * Evaluar un nodo y conocer su línea "pura" de sucesión a través del árbol
-     * Ir recorriendo el árbol mediante la profundidad de las hojas, para esto
-     * se debe utilizar una pila y no perdernos, lo que llamamos migas.
+     * Evaluar un nodo y conocer su línea "pura" de sucesión a través del árbol Ir
+     * recorriendo el árbol mediante la profundidad de las hojas, para esto se debe
+     * utilizar una pila y no perdernos, lo que llamamos migas.
      *
      * A medida que recorro voy buscando, es decir comparando.
      *

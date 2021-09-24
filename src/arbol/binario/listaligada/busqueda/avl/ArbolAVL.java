@@ -64,6 +64,7 @@ public class ArbolAVL<T extends Comparable> {
             }
             // 
             int comparacion = nodoAInsertar.getDato().compareTo(nodoRecorrido.getDato());
+            
             if (comparacion == 0) {
                 //es un dato existente
                 return nodoRecorrido;

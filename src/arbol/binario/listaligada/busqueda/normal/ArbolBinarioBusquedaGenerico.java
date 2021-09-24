@@ -60,7 +60,7 @@ public class ArbolBinarioBusquedaGenerico extends ArbolBinarioListaLigada {
     public NodoBinarioBusqueda insertar(NodoBinarioBusqueda nodoDato) throws Exception {
         if (raiz == null) {
             raiz = nodoDato;
-            return  (NodoBinarioBusqueda) raiz;
+            return (NodoBinarioBusqueda) raiz;
         } else {
             Comparable dato = nodoDato.getDato();
             NodoBinarioBusqueda aux = (NodoBinarioBusqueda) raiz;
@@ -71,14 +71,14 @@ public class ArbolBinarioBusquedaGenerico extends ArbolBinarioListaLigada {
                 } else if (dato.compareTo(aux.getDato()) < 0) {
                     if (aux.getLi() != null) {
                         aux = (NodoBinarioBusqueda) aux.getLi();
-                    } else {  // Se debe insertar
+                    } else { // Se debe insertar
                         aux.setLi(nodoDato);
                         return nodoDato;
                     }
                 } else {
                     if (aux.getLd() != null) {
                         aux = (NodoBinarioBusqueda) aux.getLd();
-                    } else {  // Se debe insertar
+                    } else { // Se debe insertar
                         aux.setLd(nodoDato);
                         return nodoDato;
                     }
@@ -89,8 +89,7 @@ public class ArbolBinarioBusquedaGenerico extends ArbolBinarioListaLigada {
     }
 
     /**
-     * Este metodo retorna el nodo si el dato se encuentra o null de lo
-     * contrario
+     * Este metodo retorna el nodo si el dato se encuentra o null de lo contrario
      *
      * @param dato
      * @return

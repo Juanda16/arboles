@@ -2,14 +2,24 @@ package util;
 
 import java.io.*;
 
+import javax.xml.stream.events.NotationDeclaration;
+
 import arbol.binario.listaligada.busqueda.avl.ArbolAVL;
+import arbol.binario.listaligada.busqueda.avl.NodoAVL;
+import arbol.binario.listaligada.busqueda.normal.ArbolBinarioBusquedaGenerico;
+import arbol.binario.listaligada.busqueda.normal.NodoBinarioBusqueda;
+import arbol.nario.listageneralizada.ArbolNarioListaGeneralizada;
+import arbol.nario.listageneralizada.NodoNario;
+import ejemplos.grafico.arbol.binario.busqueda.biblioteca.NodoBinario;
 import models.DnaTest;
 
 public class FileTo {
 
     public static final String SEPARATOR = ";";
     public static final String QUOTE = "\"";
-
+    private static ArbolBinarioBusquedaGenerico recordBin;
+    
+    
     /**
      * @param filePath
      * @return MatrizEnTripleta
@@ -21,7 +31,8 @@ public class FileTo {
 
         try {
 
-            ArbolAVL<DnaTest> record = new ArbolAVL<DnaTest>();
+            ArbolAVL<DnaTest> recordAvl = new ArbolAVL<DnaTest>();
+            ArbolNarioListaGeneralizada recordNario= new ArbolNarioListaGeneralizada(new NodoNario(null));
             br = new BufferedReader(new FileReader(filePath));
             String line = br.readLine();
 
@@ -39,7 +50,14 @@ public class FileTo {
                     tempTest.setGen4(fields[5]);
                     tempTest.setFatherId(Integer.parseInt(fields[6]));
 
-                    record.insertarDato(tempTest);
+                    
+                    recordAvl.insertarDato(tempTest);
+                    NodoNario result= new NodoNario(tempTest);
+                    //DnaTest IdPadre= new DnaTest();
+                    recordNario.insertarNuevoHijo(result);
+                    
+                  
+                
 
                 } catch (Exception error) {
                     System.out.println(error);
@@ -48,8 +66,9 @@ public class FileTo {
 
                 line = br.readLine();
             }
-            System.out.println(record.toString());
-            return record;
+            System.out.println(recordAvl.toString());
+            System.out.println(recordNario.toString());
+            return recordAvl;
         } catch (Exception e) {
             System.out.println(e);
             return null;
