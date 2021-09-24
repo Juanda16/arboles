@@ -18,9 +18,7 @@ public class FileTo {
 
     public static final String SEPARATOR = ";";
     public static final String QUOTE = "\"";
-    private static ArbolBinarioBusquedaGenerico recordBin;
-    
-    
+
     /**
      * @param filePath
      * @return MatrizEnTripleta
@@ -39,7 +37,7 @@ public class FileTo {
             ArbolAVL<DnaTest> recordByGen4 = new ArbolAVL<DnaTest>();
             recordByGen3 = new ArbolAVL<DnaTest>();
             ArbolAVL<DnaTest> recordAvl = new ArbolAVL<DnaTest>();
-            ArbolNarioListaGeneralizada recordNario= new ArbolNarioListaGeneralizada(new NodoNario(null));
+            ArbolNarioListaGeneralizada recordNario = new ArbolNarioListaGeneralizada(new NodoNario(null));
             br = new BufferedReader(new FileReader(filePath));
             String line = br.readLine();
 
@@ -47,28 +45,32 @@ public class FileTo {
 
                 String[] fields = line.split(SEPARATOR);
 
-                try {
-                    DnaTest tempTest = new DnaTest();
-                    tempTest.setUserId(Integer.parseInt(fields[0]));                    
-                    tempTest.setName(fields[1]);
-                    tempTest.setGen1(fields[2]);
-                    tempTest.setGen2(fields[3]);
-                    tempTest.setGen3(fields[4]);
-                    tempTest.setGen4(fields[5]);
-                    tempTest.setFatherId(Integer.parseInt(fields[6]));      
+                DnaTest tempTest = new DnaTest();
+                tempTest.setUserId(Integer.parseInt(fields[0]));
+                tempTest.setName(fields[1]);
+                tempTest.setGen1(fields[2]);
+                tempTest.setGen2(fields[3]);
+                tempTest.setGen3(fields[4]);
+                tempTest.setGen4(fields[5]);
+                tempTest.setFatherId(Integer.parseInt(fields[6]));
 
-                    tempTest.setIndex(fields[0]);
-                    recordById.insertarDato(tempTest);
-                    tempTest.setIndex(fields[2]);
-                    recordByGen1.insertarDato(tempTest);
-                    tempTest.setIndex(fields[3]);
-                    recordByGen2.insertarDato(tempTest);
-                    tempTest.setIndex(fields[4]);
-                    recordByGen3.insertarDato(tempTest);
-                    tempTest.setIndex(fields[5]);
-                    recordByGen4.insertarDato(tempTest);
-                    
+                tempTest.setIndex(fields[0]);
+                recordById.insertarDato(tempTest);
+                tempTest.setIndex(fields[2]);
+                recordByGen1.insertarDato(tempTest);
+                tempTest.setIndex(fields[3]);
+                recordByGen2.insertarDato(tempTest);
+                tempTest.setIndex(fields[4]);
+                recordByGen3.insertarDato(tempTest);
+                tempTest.setIndex(fields[5]);
+                recordByGen4.insertarDato(tempTest);
 
+                NodoNario result = new NodoNario(tempTest);
+                recordNario.insertarNuevoHijo(result);
+
+            }
+
+            return recordAvl;
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -80,4 +82,4 @@ public class FileTo {
         }
 
     }
-
+}

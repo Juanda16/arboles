@@ -327,9 +327,9 @@ public class ArbolNarioListaGeneralizada {
     public void insertarNuevoHijo(NodoNario dato) {
         NodoNario recorrido = raiz;
         Queue<NodoNario> miga = new LinkedList<>();
-        if (raiz.getDato() == null) {
-            this.setRaiz(dato);
-        }
+        // if (raiz.getDato() == null) {
+        //     this.setRaiz(dato);
+        // }
         // BuscarPorListas(fatherId);
         DnaTest regTemp = (DnaTest) dato.getDato();
         int fatherIdTemp;
@@ -362,11 +362,13 @@ public class ArbolNarioListaGeneralizada {
             }
             recorrido = recorrido.getLiga();
             if (recorrido == null) {
-                insertarHijo(raiz, dato, NOTRANSFORMAR);                
+                insertarHijo(raiz, dato, TRANSFORMAR);  
+                break;              
             }
             if (recorrido == null && !miga.isEmpty()) {
                 insertarHijo(recorrido, dato, NOTRANSFORMAR);
                 recorrido = miga.remove();
+                break;
             }
 
         }
@@ -380,23 +382,23 @@ public class ArbolNarioListaGeneralizada {
             r.setDato(nuevoPadre);
             nuevoPadre.setLiga(nuevoHijo);
         } else {
-            nuevoHijo.setLiga(r.getLiga());
+            //nuevoHijo.setLiga(r.getLiga());
             r.setLiga(nuevoHijo);
         }  // a r le pone la liga de nuevo hijo pero r se pierde
     }
 
-    private void insertarHijo(NodoNario r, char dato, boolean TRANSFORMAR) {
-        NodoNario nuevoHijo = new NodoNario(dato);
-        if (TRANSFORMAR) {
-            r.setSw(1);
-            NodoNario nuevoPadre = new NodoNario(r.getDato());
-            r.setDato(nuevoPadre);
-            nuevoPadre.setLiga(nuevoHijo);
-        } else {
-            nuevoHijo.setLiga(r.getLiga());
-            r.setLiga(nuevoHijo);
-        }
-    }
+    // private void insertarHijo(NodoNario r, char dato, boolean TRANSFORMAR) {
+    //     NodoNario nuevoHijo = new NodoNario(dato);
+    //     if (TRANSFORMAR) {
+    //         r.setSw(1);
+    //         NodoNario nuevoPadre = new NodoNario(r.getDato());
+    //         r.setDato(nuevoPadre);
+    //         nuevoPadre.setLiga(nuevoHijo);
+    //     } else {
+    //         nuevoHijo.setLiga(r.getLiga());
+    //         r.setLiga(nuevoHijo);
+    //     }
+    // }
 
     public int determinarGrado(char x) throws Exception {
 
