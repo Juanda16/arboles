@@ -90,8 +90,8 @@ public class DnaTest implements Comparable<DnaTest> {
 
     @Override
     public int compareTo(DnaTest test) {
-        DnaTest t = (DnaTest) test;
-        String pb = String.valueOf( t.userId);
+        
+        String pb = String.valueOf(test.index);
         String pa = index;
         return pa.compareTo(pb);
 
