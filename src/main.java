@@ -19,27 +19,7 @@ public class main {
 
         ArbolAVL<DnaTest> record = new ArbolAVL<DnaTest>();
         record = FileTo.recordTree("src/muestras.csv");
-        String inorden = "gehicrbfdajklnmop";
 
-        String preorden = "abceghirdflkjmnop";
-
-        Character[] inordenCH = convertirChar2Character(inorden);
-        Character[] preordenCH = convertirChar2Character(preorden);
-
-        ArbolBinarioListaLigada abll = new ArbolBinarioListaLigada();
-        NodoBinarioGenerico raiz = abll.construyeArbolCadenaPREyIN(preordenCH, inordenCH);
-
-        abll.setRaiz(raiz);
-        ArbolBinarioListaLigada.inorden(raiz);
-    }
-
-    private static Character[] convertirChar2Character(String cadena) {
-        Character[] nuevoCH = new Character[cadena.length()];
-        for (int i = 0; i < cadena.length(); i++) {
-            Character c = cadena.charAt(i);
-            nuevoCH[i] = c;
-        }
-        return nuevoCH;
     }
 
 }

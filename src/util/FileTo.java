@@ -10,7 +10,6 @@ import arbol.binario.listaligada.busqueda.normal.ArbolBinarioBusquedaGenerico;
 import arbol.binario.listaligada.busqueda.normal.NodoBinarioBusqueda;
 import arbol.nario.listageneralizada.ArbolNarioListaGeneralizada;
 import arbol.nario.listageneralizada.NodoNario;
-import ejemplos.grafico.arbol.binario.busqueda.biblioteca.NodoBinario;
 import models.DnaTest;
 import models.DnaTestGen1;
 
@@ -67,6 +66,7 @@ public class FileTo {
 
                 NodoNario result = new NodoNario(tempTest);
                 recordNario.insertarNuevoHijo(result);
+                line = br.readLine();
 
             }
 
