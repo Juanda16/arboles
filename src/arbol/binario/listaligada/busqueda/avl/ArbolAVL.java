@@ -46,7 +46,7 @@ public class ArbolAVL<T extends Comparable> {
         }
         NodoAVL nodoRecorrido = root; // Registro que uso para buscar
         NodoAVL padreNodoRecorridoX = null;
-        NodoAVL pivote = root; // Nodo que se puede desvalancear
+        NodoAVL pivote = root; // Nodo que se puede desbalancear
         NodoAVL padrePivote = null;
         NodoAVL nodoRecorridoParaFB;
         NodoAVL q;
@@ -62,18 +62,18 @@ public class ArbolAVL<T extends Comparable> {
                 pivote = nodoRecorrido;
                 padrePivote = padreNodoRecorridoX;
             }
-            // 
-            int comparacion = nodoAInsertar.getDato().compareTo(nodoRecorrido.getDato());
-            
+            //
+            int comparacion = nodoAInsertar.getDato().compareTo(nodoRecorrido.getDato()); // aqui está el problema
+
             if (comparacion == 0) {
-                //es un dato existente
+                // es un dato existente
                 return nodoRecorrido;
             } else if (comparacion < 0) {
                 // n es menor
                 padreNodoRecorridoX = nodoRecorrido;
                 nodoRecorrido = (NodoAVL) nodoRecorrido.getLi();
             } else {
-                //n es mayor
+                // n es mayor
                 padreNodoRecorridoX = nodoRecorrido;
                 nodoRecorrido = (NodoAVL) nodoRecorrido.getLd();
             }
