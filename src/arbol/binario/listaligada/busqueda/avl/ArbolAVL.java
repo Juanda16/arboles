@@ -289,4 +289,11 @@ public class ArbolAVL<T extends Comparable> {
         return root;
     }
 
+    @Override
+    public String toString() {
+        return "ArbolAVL [root=" + root + ", ult=" + ult + ", x=" + x + "]";
+    }
+
+    
+
 }
